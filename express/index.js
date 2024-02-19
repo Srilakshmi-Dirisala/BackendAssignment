@@ -8,6 +8,13 @@ const userData=require('../src/routes/demo_route')
 module.exports=()=>{
     connectDB();
     const app=express();
+    app.use((req,res,next)=>{
+        const timestamp=new Date().toISOString();
+        const{method,url,headers}=req;
+        const accessToken=headers.authorization || 'N/A';
+        console.log(`[${timestamp}] ${method}: ${url}, AccessToken:"${accessToken}"`);
+        next();
+    })
     app.use(cors());
     app.use(bodyParser.urlencoded({extended:false}));
     app.use(bodyParser.json());
