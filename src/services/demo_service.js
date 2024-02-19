@@ -131,7 +131,7 @@ const deleteUserDataServices=async(req,res)=>{
          "countries": result[0].countries
 
      }
-     return{status: 200,message:'user Deleted successfully',data:res}
+     return{status: 200,message:'success',data:res}
  } catch (error) {
      console.log("error",error);
      throw new Error 
