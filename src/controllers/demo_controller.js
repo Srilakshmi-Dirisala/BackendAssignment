@@ -1,4 +1,4 @@
-const {getUserDataService, addUserDataServices, updateUserDataServices, deleteUserDataServices}=require('../services/demo_service')
+const {getUserDataService, addUserDataServices, updateUserDataServices, deleteUserDataServices, getUserAggregateDataServices}=require('../services/demo_service')
 
 const getUserDataController=async(req,res)=>{
     callservices(getUserDataService,req,res)
@@ -14,6 +14,10 @@ const updateUserDataController=async(req,res)=>{
 
 const deleteUserDataController=async(req,res)=>{
     callservices(deleteUserDataServices,req,res)
+}
+
+const getUserAggregateDataController=async(req,res)=>{
+    callservices(getUserAggregateDataServices,req,res)
 }
 const callservices=async(method,req,res)=>{
     try {
@@ -33,5 +37,5 @@ const callservices=async(method,req,res)=>{
 }
 
 module.exports={
-    getUserDataController,addUserDataController,updateUserDataController,deleteUserDataController
+    getUserDataController,addUserDataController,updateUserDataController,deleteUserDataController,getUserAggregateDataController
 }

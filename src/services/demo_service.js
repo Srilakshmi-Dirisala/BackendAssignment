@@ -86,6 +86,57 @@ const deleteUserDataServices=async(req,res)=>{
  }
  }
  
+ const getUserAggregateDataServices=async(req,res)=>{
+ 
+    
+    
+     try {
+       
+        const result = await employe.aggregate([
+            // Group by country and calculate the count of users in each country
+            {
+              $group: {
+                _id: "$country",
+                count: { $sum: 1 },
+                averageAge: { $avg: "$age" }
+              }
+            },
+            // Project the fields and rename _id to country
+            {
+              $project: {
+                _id: 0,
+                country: "$_id",
+                count: 1,
+                averageAge: 1
+              }
+            },
+            // Calculate the total number of users
+            {
+              $group: {
+                _id: null,
+                totalUsers: { $sum: "$count" },
+                averageAge: { $avg: "$averageAge" },
+                countries: { $push: { country: "$country", count: "$count" } }
+              }
+            }
+          ]);
+      
+          // Output the aggregated data
+          console.log("Total Users:", result[0].totalUsers);
+          console.log("Average Age:", result[0].averageAge);
+          console.log("Users by Country:", result[0].countries);
+     const res={
+         "totalUsers":result[0].totalUsers,
+         "averageAge":result[0].averageAge,
+         "countries": result[0].countries
+
+     }
+     return{status: 200,message:'user Deleted successfully',data:res}
+ } catch (error) {
+     console.log("error",error);
+     throw new Error 
+ }
+ }
 module.exports={
-    getUserDataService,addUserDataServices,updateUserDataServices,deleteUserDataServices
+    getUserDataService,addUserDataServices,updateUserDataServices,deleteUserDataServices,getUserAggregateDataServices
 }
