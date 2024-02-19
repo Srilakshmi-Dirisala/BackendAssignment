@@ -5,7 +5,7 @@ const getUserDataService=async()=>{
     try {
       
         const employee=await getUserDataModel.find({})
-        console.log("ppppp",employee);
+       // console.log("ppppp",employee);
         return{status: 200,message:'success',data:employee}
     } catch (error) {
         console.log("error",error);
@@ -27,7 +27,7 @@ const addUserDataServices=async(req,res)=>{
               });
 
               const newUser = await user.save();
-          console.log("nnnn",newUser)
+         // console.log("nnnn",newUser)
         // const employee=await getUserDataModel.find({})
        // console.log("ppppp",employee);
         return{status: 200,message:'Data added successfully',data:[]}
@@ -41,7 +41,7 @@ const addUserDataServices=async(req,res)=>{
 const updateUserDataServices=async(req,res)=>{
    const {id}=req.params
     const { name, email, age, country, password } = req.body;
-    console.log("emial",req.body)
+   // console.log("emial",req.body)
     try {
        let user=await employe.findById(id);
        if(!id){
@@ -57,7 +57,7 @@ const updateUserDataServices=async(req,res)=>{
       }
 
          user  = await user.save();
-      console.log("nnnn",user)
+    //  console.log("nnnn",user)
     // const employee=await getUserDataModel.find({})
    // console.log("ppppp",employee);
     return{status: 200,message:'Data updated successfully',data:[]}
