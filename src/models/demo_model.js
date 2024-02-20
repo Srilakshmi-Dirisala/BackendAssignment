@@ -22,7 +22,7 @@ const userSchema=new mongoose.Schema(
       password: {
         type: String,
         required: true,
-        select: false // Ensures password is not returned in query results
+        select: true // Ensures password is not returned in query results
       },
       },
     {

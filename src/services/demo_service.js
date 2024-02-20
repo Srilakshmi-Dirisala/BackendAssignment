@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const getUserDataService=async()=>{
     try {
       
-        const employee=await getUserDataModel.find({})
+        // const employee=await getUserDataModel.find({})
+        const employee = await employe.find({}, { password: 0 });
+
        // console.log("ppppp",employee);
         return{status: 200,message:'success',data:employee}
     } catch (error) {
@@ -86,6 +88,36 @@ const deleteUserDataServices=async(req,res)=>{
  }
  }
  
+ 
+ const signinServices = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await employe.findOne({ email });
+
+    console.log('User:', user);
+
+    if (!user) {
+      console.log('User not found');
+      return { status: 404, message: 'User not found', data: [] };
+    }
+
+    console.log('Password:', password);
+    console.log('Hashed Password:', user.password);
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      console.log('Invalid password');
+      return { status: 401, message: 'Please enter correct password', data: [] };
+    }
+
+    console.log('Sign-in successful');
+    return { status: 200, message: 'Sign-in successful', data: [] };
+  } catch (error) {
+    console.log('Error:', error);
+    throw new Error(error);
+  }
+};
+
  const getUserAggregateDataServices=async(req,res)=>{
  
     
@@ -138,5 +170,5 @@ const deleteUserDataServices=async(req,res)=>{
  }
  }
 module.exports={
-    getUserDataService,addUserDataServices,updateUserDataServices,deleteUserDataServices,getUserAggregateDataServices
+    getUserDataService,addUserDataServices,updateUserDataServices,deleteUserDataServices,getUserAggregateDataServices,signinServices
 }
